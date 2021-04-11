@@ -15,6 +15,26 @@
   ],
   "main": "./build/ext-src/extension.js",
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "todos-vscode-extension-sidebar-view",
+          "title": "Todos-VSCode",
+          "icon": "media/list-unordered.svg"
+        }
+      ]
+    },
+    "views": {
+      "todos-vscode-extension-sidebar-view": [
+        {
+          "type": "webview",
+          "id": "todos-vscode-extension-sidebar",
+          "name": "Todos-VSCode",
+          "icon": "media/checklist.svg",
+          "contextualTitle": "Todos-VSCode"
+        }
+      ]
+    },
     "commands": [
       {
         "command": "todos-vscode-extension.helloWorld",

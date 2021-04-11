@@ -2,74 +2,52 @@ import * as vscode from "vscode";
 import { getNonce } from "./getNonce";
 import * as path from 'path';
 
-export default class SidebarProvider {
+export default class SidebarProvider implements vscode.WebviewViewProvider {
 
-	public static currentPanel: SidebarProvider | undefined;
-
-	private static readonly viewType = 'react';
-
-	private readonly _panel: vscode.WebviewPanel;
+	private static readonly viewType = 'side-bar';
 	private readonly _extensionPath: string;
-	private _disposables: vscode.Disposable[] = [];
+  public _view?: vscode.WebviewView;
 
-	public static createOrShow(extensionPath: string) {
-		const column = vscode.window.activeTextEditor ? vscode.window.activeTextEditor.viewColumn : undefined;
-
-		if (SidebarProvider.currentPanel) {
-			SidebarProvider.currentPanel._panel.reveal(column);
-		} else {
-			SidebarProvider.currentPanel = new SidebarProvider(extensionPath, column || vscode.ViewColumn.One);
-		}
-	}
-
-	private constructor(extensionPath: string, column: vscode.ViewColumn) {
+	constructor(extensionPath: string) {
 		this._extensionPath = extensionPath;
-
-		this._panel = vscode.window.createWebviewPanel(SidebarProvider.viewType, "React", column, {
-			enableScripts: true,
-			localResourceRoots: [
-				vscode.Uri.file(path.join(this._extensionPath, 'build'))
-			]
-		});
-		
-		this._panel.webview.html = this._getHtmlForWebview();
-		this._panel.onDidDispose(() => this.dispose(), null, this._disposables);
-
-		this._panel.webview.onDidReceiveMessage(message => {
-			switch (message.command) {
-				case 'alert':
-					vscode.window.showErrorMessage(message.text);
-					return;
-			}
-		}, null, this._disposables);
 	}
 
-	public doRefactor() {
-		this._panel.webview.postMessage({ command: 'refactor' });
+	public resolveWebviewView(webviewView: vscode.WebviewView) {
+		this._view = webviewView;
+
+    webviewView.webview.options = {
+      enableScripts: true,
+      localResourceRoots: [vscode.Uri.file(path.join(this._extensionPath, 'build'))]
+    };
+
+    webviewView.webview.html = this._getHtmlForWebview();
+
+    webviewView.webview.onDidReceiveMessage(async (data) => {
+      switch (data.type) {
+        case "onInfo": {
+          if (!data.value) {
+            return;
+          }
+          vscode.window.showInformationMessage(data.value);
+          break;
+        }
+        case "onError": {
+          if (!data.value) {
+            return;
+          }
+          vscode.window.showErrorMessage(data.value);
+          break;
+        }
+      }
+    });
 	}
 
-	public dispose() {
-		SidebarProvider.currentPanel = undefined;
-
-		this._panel.dispose();
-
-		while (this._disposables.length) {
-			const x = this._disposables.pop();
-			if (x) {
-				x.dispose();
-			}
-		}
-	}
-
-	public static kill() {
-    SidebarProvider.currentPanel?.dispose();
-    SidebarProvider.currentPanel = undefined;
+  public revive(panel: vscode.WebviewView) {
+    this._view = panel;
   }
 
 	private _getHtmlForWebview() {
 		const manifest = require(path.join(this._extensionPath, 'build', 'asset-manifest.json'));
-		console.log({manifest});
-		console.log(this._extensionPath);
 		const mainScript = manifest['files']['main.js'];
 		const mainStyle = manifest['files']['main.css'];
 
