@@ -1,34 +1,16 @@
 import * as vscode from 'vscode';
-import HelloWorldPanel from './HelloWorldPanel';
 import SidebarProvider from './SidebarProvider';
 
 export function activate(context: vscode.ExtensionContext) {
 
-	console.log({'path': context.extensionPath});
-	console.log({'uri': context.extensionUri});
-
-	context.subscriptions.push(vscode.commands.registerCommand('todos-vscode-extension.helloWorld', () => {
+	context.subscriptions.push(vscode.commands.registerCommand('todos-vscode-extension.refresh', () => {
+		SidebarProvider.kill();
 		SidebarProvider.createOrShow(context.extensionPath);
+		setTimeout(() => {
+			vscode.commands.executeCommand("workbench.action.webview.openDeveloperTools");
+		}, 500);
 	}));
-
-	// context.subscriptions.push(vscode.commands.registerCommand('todos-vscode-extension.helloWorld', () => {
-	// 	HelloWorldPanel.createOrShow(context.extensionUri);
-	// }));
-
-	// 	const provider = new ColorsViewProvider(context.extensionUri);
-
-	// context.subscriptions.push(
-	// 	vscode.window.registerWebviewViewProvider(ColorsViewProvider.viewType, provider));
-
-	// context.subscriptions.push(
-	// 	vscode.commands.registerCommand('calicoColors.addColor', () => {
-	// 		provider.addColor();
-	// 	}));
-
-	// context.subscriptions.push(
-	// 	vscode.commands.registerCommand('calicoColors.clearColors', () => {
-	// 		provider.clearColors();
-	// 	}));
+	
 }
 
 export function deactivate() {}
