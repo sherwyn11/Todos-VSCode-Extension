@@ -11,7 +11,8 @@
   ],
   "activationEvents": [
     "onCommand:todos-vscode-extension.helloWorld",
-    "onCommand:todos-vscode-extension.refresh"
+    "onCommand:todos-vscode-extension.refresh",
+    "onCommand:todos-vscode-extension.addTodo"
   ],
   "main": "./build/ext-src/extension.js",
   "contributes": {
@@ -45,6 +46,11 @@
         "command": "todos-vscode-extension.refresh",
         "category": "Todos-VSCode",
         "title": "Refresh"
+      },
+      {
+        "command": "todos-vscode-extension.addTodo",
+        "category": "Todos-VSCode",
+        "title": "Add a Todo from selected text"
       }
     ]
   },

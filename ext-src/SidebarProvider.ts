@@ -72,8 +72,10 @@ export default class SidebarProvider implements vscode.WebviewViewProvider {
 			<body>
 				<noscript>You need to enable JavaScript to run this app.</noscript>
 				<div id="root"></div>
-				
 				<script nonce="${nonce}" src="${scriptUri}"></script>
+				<script nonce="${nonce}">
+          const tsvscode = acquireVsCodeApi();
+        </script>
 			</body>
 			</html>`;
 	}

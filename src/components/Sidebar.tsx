@@ -11,34 +11,43 @@ export default function Sidebar() {
   let [printTodos, setprintTodos] = useState<any>([]);
 
   useEffect(() => {
+    window.addEventListener("message", async (event) => {
+      console.log(event);
+      const message = event.data;
+      switch (message.type) {
+        case "add-todo":
+          setText(message.value);
+          addTodo(undefined, message.value);
+          break;
+      }
+    });
     printTodoElements();
   }, [todos]);
 
   const updateText = (e: any) => {
     setText(e.target.value);
-  }
+  };
 
-  const addTodo = (e: any) => {
-    e.preventDefault();
-    setTodos([{ text: text, completed: false }, ...todos]);
+  const addTodo = (e?: any, selectedText?: string) => {
+    if (e) { e.preventDefault(); };
+    if (selectedText) {
+      setTodos([{ text: selectedText, completed: false }, ...todos]);
+    } else {
+      setTodos([{ text: text, completed: false }, ...todos]);
+    }
     setText('');
-  }
+  };
 
   const updateStatus = (e: any) => {
-    console.log(e);
-    let selectedTodo: TODO = todos.filter((todo) => { return todo.text === e.target.innerHTML })[0];
-    console.log(selectedTodo)
+    let selectedTodo: TODO = todos.filter((todo) => { return todo.text === e.target.innerHTML; })[0];
     selectedTodo.completed = !selectedTodo.completed;
     printTodoElements();
-  }
+  };
 
   function printTodoElements () {
-    console.log(todos);
     let t = todos.map((todo) => {
-      console.log(todo);
-      return <ul><li value={todo.text} onClick={updateStatus} style={ todo.completed ? {textDecoration: "line-through"} : {} }>{todo.text}</li></ul>;
+      return <ul><li value={todo.text} onClick={updateStatus} style={ todo.completed ? {textDecoration: "line-through", "fontStyle": "italic"} : {} }>{todo.text}</li></ul>;
     });
-    console.log(t);
     setprintTodos(t);
   }
 

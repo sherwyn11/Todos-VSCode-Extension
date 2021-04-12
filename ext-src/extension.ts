@@ -16,6 +16,21 @@ export function activate(context: vscode.ExtensionContext) {
 		);
 	}));
 
+	context.subscriptions.push(vscode.commands.registerCommand('todos-vscode-extension.addTodo', async () => {
+		const { activeTextEditor } = vscode.window;
+		if (activeTextEditor === undefined) {
+			vscode.window.showErrorMessage("No active text editor present!");
+			return;
+		} else {
+			let selectedText = activeTextEditor.document.getText(activeTextEditor.selection);
+			vscode.window.showInformationMessage(`"${selectedText}" added to your Todos!`);
+			sidebarProvider._view?.webview.postMessage({
+				type: "add-todo",
+				value: selectedText
+			});
+		}
+	}));
+
 }
 
 export function deactivate() {}
