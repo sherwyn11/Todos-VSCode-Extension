@@ -1,10 +1,9 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 export default function Sidebar() {
-
   interface TODO {
-    text: string,
-    completed: boolean
+    text: string;
+    completed: boolean;
   }
   let [text, setText] = useState("");
   let [todos, setTodos] = useState<Array<TODO>>([]);
@@ -29,24 +28,42 @@ export default function Sidebar() {
   };
 
   const addTodo = (e?: any, selectedText?: string) => {
-    if (e) { e.preventDefault(); };
+    if (e) {
+      e.preventDefault();
+    }
     if (selectedText) {
       setTodos([{ text: selectedText, completed: false }, ...todos]);
     } else {
       setTodos([{ text: text, completed: false }, ...todos]);
     }
-    setText('');
+    setText("");
   };
 
   const updateStatus = (e: any) => {
-    let selectedTodo: TODO = todos.filter((todo) => { return todo.text === e.target.innerHTML; })[0];
+    let selectedTodo: TODO = todos.filter((todo) => {
+      return todo.text === e.target.innerHTML;
+    })[0];
     selectedTodo.completed = !selectedTodo.completed;
     printTodoElements();
   };
 
-  function printTodoElements () {
+  function printTodoElements() {
     let t = todos.map((todo) => {
-      return <ul><li value={todo.text} onClick={updateStatus} style={ todo.completed ? {textDecoration: "line-through", "fontStyle": "italic"} : {} }>{todo.text}</li></ul>;
+      return (
+        <ul>
+          <li
+            value={todo.text}
+            onClick={updateStatus}
+            style={
+              todo.completed
+                ? { textDecoration: "line-through", fontStyle: "italic" }
+                : {}
+            }
+          >
+            {todo.text}
+          </li>
+        </ul>
+      );
     });
     setprintTodos(t);
   }
@@ -54,10 +71,11 @@ export default function Sidebar() {
   return (
     <div>
       <form>
-        <input onChange={updateText} value={text}/><br></br>
+        <input onChange={updateText} value={text} />
+        <br></br>
         <button onClick={addTodo}>Add Todo</button>
       </form>
-      { printTodos }
+      {printTodos}
     </div>
   );
 }

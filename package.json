@@ -12,7 +12,8 @@
   "activationEvents": [
     "onCommand:todos-vscode-extension.helloWorld",
     "onCommand:todos-vscode-extension.refresh",
-    "onCommand:todos-vscode-extension.addTodo"
+    "onCommand:todos-vscode-extension.addTodo",
+    "onCommand:todos-vscode-extension.authenticate"
   ],
   "main": "./build/ext-src/extension.js",
   "contributes": {
@@ -51,6 +52,11 @@
         "command": "todos-vscode-extension.addTodo",
         "category": "Todos-VSCode",
         "title": "Add a Todo from selected text"
+      },
+      {
+        "command": "todos-vscode-extension.authenticate",
+        "category": "Todos-VSCode",
+        "title": "Authenticate user"
       }
     ]
   },
@@ -96,6 +102,8 @@
     ]
   },
   "dependencies": {
+    "@types/polka": "^0.5.2",
+    "polka": "^0.5.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "terser": "^5.6.1"
