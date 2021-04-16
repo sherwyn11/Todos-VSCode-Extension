@@ -1,81 +1,80 @@
 import React, { useState, useEffect } from "react";
+import Todos from "./Todos";
+import axios from "axios";
 
 export default function Sidebar() {
-  interface TODO {
-    text: string;
-    completed: boolean;
-  }
-  let [text, setText] = useState("");
-  let [todos, setTodos] = useState<Array<TODO>>([]);
-  let [printTodos, setprintTodos] = useState<any>([]);
+  const [accessToken, setAccessToken] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState({
+    email: "",
+    username: "",
+  });
 
   useEffect(() => {
     window.addEventListener("message", async (event) => {
-      console.log(event);
       const message = event.data;
       switch (message.type) {
-        case "add-todo":
-          setText(message.value);
-          addTodo(undefined, message.value);
+        case "jwt-token":
+          setAccessToken(message.value);
+          getUserDetails(message.value);
           break;
       }
     });
-    printTodoElements();
-  }, [todos]);
+    tsvscode.postMessage({ type: "get-jwt-token", value: undefined });
+  }, []);
 
-  const updateText = (e: any) => {
-    setText(e.target.value);
+  const getUserDetails = (token: string) => {
+    axios
+      .get(`${apiBaseURL}user/details`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response: any) => {
+        setUser(response.data);
+        setLoading(false);
+      })
+      .catch((err: any) => {
+        setLoading(false);
+      });
   };
 
-  const addTodo = (e?: any, selectedText?: string) => {
-    if (e) {
-      e.preventDefault();
-    }
-    if (selectedText) {
-      setTodos([{ text: selectedText, completed: false }, ...todos]);
-    } else {
-      setTodos([{ text: text, completed: false }, ...todos]);
-    }
-    setText("");
-  };
-
-  const updateStatus = (e: any) => {
-    let selectedTodo: TODO = todos.filter((todo) => {
-      return todo.text === e.target.innerHTML;
-    })[0];
-    selectedTodo.completed = !selectedTodo.completed;
-    printTodoElements();
-  };
-
-  function printTodoElements() {
-    let t = todos.map((todo) => {
-      return (
-        <ul>
-          <li
-            value={todo.text}
-            onClick={updateStatus}
-            style={
-              todo.completed
-                ? { textDecoration: "line-through", fontStyle: "italic" }
-                : {}
-            }
-          >
-            {todo.text}
-          </li>
-        </ul>
-      );
-    });
-    setprintTodos(t);
+  if (loading) {
+    return (
+      <div>
+        <p>Loading...</p>
+      </div>
+    );
   }
 
+  if (accessToken === "") {
+    return (
+      <button
+        onClick={() => {
+          tsvscode.postMessage({ type: "authenticate", value: undefined });
+        }}
+      >
+        Login
+      </button>
+    );
+  }
   return (
     <div>
-      <form>
-        <input onChange={updateText} value={text} />
-        <br></br>
-        <button onClick={addTodo}>Add Todo</button>
-      </form>
-      {printTodos}
+      <p>
+        Hello, <i style={{ color: "#207ADA" }}>@{user.username}!</i>
+      </p>
+      <Todos></Todos>
+      <button
+        onClick={() => {
+          setAccessToken("");
+          tsvscode.postMessage({
+            type: "logout",
+            value: undefined,
+          });
+        }}
+      >
+        Logout
+      </button>
     </div>
   );
 }

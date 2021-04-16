@@ -1,6 +1,9 @@
 import * as vscode from "vscode";
-import { getNonce } from "../utils/getNonce";
 import * as path from "path";
+import getNonce from "../utils/getNonce";
+import JWTManager from "../manager/JWTManager";
+import { TODOS_VSCODE_API_BASE_URL } from "../utils/constants";
+import authenticate from "../utils/authenticate";
 
 export default class SidebarProvider implements vscode.WebviewViewProvider {
   private static readonly viewType = "side-bar";
@@ -25,6 +28,26 @@ export default class SidebarProvider implements vscode.WebviewViewProvider {
 
     webviewView.webview.onDidReceiveMessage(async (data) => {
       switch (data.type) {
+        case "authenticate": {
+          authenticate(() => {
+            webviewView.webview.postMessage({
+              type: "jwt-token",
+              value: JWTManager.getToken(),
+            });
+          });
+          break;
+        }
+        case "get-jwt-token": {
+          webviewView.webview.postMessage({
+            type: "jwt-token",
+            value: JWTManager.getToken(),
+          });
+          break;
+        }
+        case "logout": {
+          JWTManager.setToken("");
+          break;
+        }
         case "onInfo": {
           if (!data.value) {
             return;
@@ -75,7 +98,7 @@ export default class SidebarProvider implements vscode.WebviewViewProvider {
 				<meta name="theme-color" content="#000000">
 				<title>React App</title>
 				<link rel="stylesheet" type="text/css" href="${styleUri}">
-				<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src vscode-resource: https:; script-src 'nonce-${nonce}';style-src vscode-resource: 'unsafe-inline' http: https: data:;">
+				<meta http-equiv="Content-Security-Policy" content="img-src https: data:; style-src 'unsafe-inline'">
 				<base href="${vscode.Uri.file(path.join(this._extensionPath, "build")).with({
           scheme: "vscode-resource",
         })}/">
@@ -86,6 +109,7 @@ export default class SidebarProvider implements vscode.WebviewViewProvider {
 				<script nonce="${nonce}" src="${scriptUri}"></script>
 				<script nonce="${nonce}">
           const tsvscode = acquireVsCodeApi();
+          const apiBaseURL = ${JSON.stringify(TODOS_VSCODE_API_BASE_URL)};
         </script>
 			</body>
 			</html>`;

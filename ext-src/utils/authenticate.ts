@@ -1,8 +1,9 @@
 import * as polka from "polka";
 import * as vscode from "vscode";
 import JWTManager from "../manager/JWTManager";
+import { TODOS_VSCODE_API_BASE_URL } from "../utils/constants";
 
-const authenticate = () => {
+const authenticate = (fn: () => void) => {
   const app = polka();
 
   app.get("/auth/:token", async (req, res) => {
@@ -14,6 +15,7 @@ const authenticate = () => {
       return;
     }
     await JWTManager.setToken(token);
+    fn();
 
     res.end(
       `<html><body><img src="https://tetranoodle.com/wp-content/uploads/2018/07/tick-gif.gif"/><h1 style="color:#1F639C; font-family: Arial, Verdana, sans-serif;">Todos VSCode Extension</h1><h3 style="font-family: Arial, Verdana, sans-serif;">Authentication with Github was successful! You can now safely close this tab.</h3></body></html>`
@@ -27,7 +29,7 @@ const authenticate = () => {
     } else {
       vscode.commands.executeCommand(
         "vscode.open",
-        vscode.Uri.parse(`http://localhost:8000/api/auth/github`)
+        vscode.Uri.parse(`${TODOS_VSCODE_API_BASE_URL}auth/github`)
       );
     }
   });

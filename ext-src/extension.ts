@@ -4,12 +4,18 @@ import SidebarProvider from "./provider/SidebarProvider";
 import authenticate from "./utils/authenticate";
 
 export function activate(context: vscode.ExtensionContext) {
-
-	JWTManager.globalState = context.globalState;
+  JWTManager.globalState = context.globalState;
 
   const sidebarProvider: SidebarProvider = new SidebarProvider(
     context.extensionPath
   );
+
+  const item = vscode.window.createStatusBarItem(
+    vscode.StatusBarAlignment.Right
+  );
+  item.text = "$(list-unordered) Add a Todo";
+  item.command = "todos-vscode-extension.addTodo";
+  item.show();
 
   context.subscriptions.push(
     vscode.window.registerWebviewViewProvider(
@@ -34,7 +40,7 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand(
       "todos-vscode-extension.authenticate",
       async () => {
-        authenticate();
+        authenticate(() => {});
       }
     )
   );

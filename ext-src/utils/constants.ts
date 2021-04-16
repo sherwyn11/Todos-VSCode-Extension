@@ -1,0 +1,1 @@
+export const TODOS_VSCODE_API_BASE_URL: string = "http://localhost:8000/api/";
