@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { getNonce } from "./getNonce";
+import { getNonce } from "../utils/getNonce";
 import * as path from "path";
 
 export default class SidebarProvider implements vscode.WebviewViewProvider {

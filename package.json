@@ -10,7 +10,6 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:todos-vscode-extension.helloWorld",
     "onCommand:todos-vscode-extension.refresh",
     "onCommand:todos-vscode-extension.addTodo",
     "onCommand:todos-vscode-extension.authenticate"
@@ -38,11 +37,6 @@
       ]
     },
     "commands": [
-      {
-        "command": "todos-vscode-extension.helloWorld",
-        "category": "Todos-VSCode",
-        "title": "Hello World"
-      },
       {
         "command": "todos-vscode-extension.refresh",
         "category": "Todos-VSCode",

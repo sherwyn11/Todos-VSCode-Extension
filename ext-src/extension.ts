@@ -1,8 +1,12 @@
 import * as vscode from "vscode";
-import SidebarProvider from "./SidebarProvider";
-import authenticate from "./authenticate";
+import JWTManager from "./manager/JWTManager";
+import SidebarProvider from "./provider/SidebarProvider";
+import authenticate from "./utils/authenticate";
 
 export function activate(context: vscode.ExtensionContext) {
+
+	JWTManager.globalState = context.globalState;
+
   const sidebarProvider: SidebarProvider = new SidebarProvider(
     context.extensionPath
   );
