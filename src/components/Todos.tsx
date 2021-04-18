@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-export default function Todos() {
+export default function Todos(props: any) {
   interface TODO {
+    id: string;
     text: string;
-    completed: boolean;
+    status: boolean;
   }
   let [text, setText] = useState("");
   let [todos, setTodos] = useState<Array<TODO>>([]);
   let [printTodos, setprintTodos] = useState<any>([]);
+  let [accessToken, setAccessToken] = useState(props.accessToken);
+
+  useEffect(() => {
+    printTodoElements();
+  }, [todos]);
 
   useEffect(() => {
     window.addEventListener("message", async (event) => {
@@ -19,31 +26,79 @@ export default function Todos() {
           break;
       }
     });
-    printTodoElements();
-  }, [todos]);
+    axios
+      .get(`${apiBaseURL}todo/get-all`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((response: any) => {
+        let temp: Array<TODO> = [];
+        response.data.message.forEach((todo: any) => {
+          temp.push({
+            id: todo.id,
+            text: todo.todo,
+            status: todo.status,
+          });
+        });
+        setTodos(temp);
+      })
+      .catch((err: Error) => {});
+  }, []);
 
   const updateText = (e: any) => {
     setText(e.target.value);
   };
 
   const addTodo = (e?: any, selectedText?: string) => {
+    let todoText = "";
     if (e) {
       e.preventDefault();
     }
     if (selectedText) {
-      setTodos([{ text: selectedText, completed: false }, ...todos]);
+      setText(selectedText);
+      todoText = selectedText;
     } else {
-      setTodos([{ text: text, completed: false }, ...todos]);
+      todoText = text;
     }
-    setText("");
+    let data = { todo: todoText, status: false };
+    axios
+      .post(`${apiBaseURL}todo/add`, data, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((response) => {
+        setTodos((prevTodos) => [
+          { id: response.data.message.id, text: todoText, status: false },
+          ...prevTodos,
+        ]);
+
+        setText("");
+      })
+      .catch((e: Error) => {
+        console.log(e);
+      });
   };
 
   const updateStatus = (e: any) => {
     let selectedTodo: TODO = todos.filter((todo) => {
-      return todo.text === e.target.innerHTML;
+      return todo.id === e.target.id;
     })[0];
-    selectedTodo.completed = !selectedTodo.completed;
-    printTodoElements();
+    let data = { tid: selectedTodo.id };
+    axios
+      .patch(`${apiBaseURL}todo/update`, data, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((response) => {
+        selectedTodo.status = !selectedTodo.status;
+        printTodoElements();
+      })
+      .catch((e: Error) => {
+        console.log(e);
+      });
   };
 
   function printTodoElements() {
@@ -52,9 +107,10 @@ export default function Todos() {
         <ul>
           <li
             value={todo.text}
+            id={todo.id}
             onClick={updateStatus}
             style={
-              todo.completed
+              todo.status
                 ? { textDecoration: "line-through", fontStyle: "italic" }
                 : {}
             }

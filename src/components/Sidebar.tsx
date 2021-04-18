@@ -6,6 +6,7 @@ export default function Sidebar() {
   const [accessToken, setAccessToken] = useState("");
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState({
+    id: "",
     email: "",
     username: "",
   });
@@ -34,7 +35,8 @@ export default function Sidebar() {
         setUser(response.data);
         setLoading(false);
       })
-      .catch((err: any) => {
+      .catch((err: Error) => {
+        console.log(err);
         setLoading(false);
       });
   };
@@ -63,7 +65,7 @@ export default function Sidebar() {
       <p>
         Hello, <i style={{ color: "#207ADA" }}>@{user.username}!</i>
       </p>
-      <Todos></Todos>
+      <Todos accessToken={accessToken}></Todos>
       <button
         onClick={() => {
           setAccessToken("");
