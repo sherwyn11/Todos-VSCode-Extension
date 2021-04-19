@@ -1,70 +1,38 @@
-# todos-vscode-extension README
+# Todos-VScode-Extension <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/1024px-Visual_Studio_Code_1.35_icon.svg.png" height="35px" width="35px"/> <img src="https://freepngimg.com/download/android/62306-do-task-to-icons-list-item-computer.png" height="35px" width="35px"/>
 
-This is the README for your extension "todos-vscode-extension". After writing up a brief description, we recommend including the following sections.
+Manage your Todos easily right in VSCode itself!
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+![demo](assets/demo.gif)
 
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+<ul>
+  <li>GitHub OAuth</li>
+  <li>(Option #1) Click on <b>Add Todo</b> to add a Todo.</li>
+  <li>(Option #2) Select over required text and click on <b>Add a Todo</b> on the VS Code window status bar to add a Todo.</li>
+  <li>(Option #3) Select over required text and type `⌘ + ⇧ + P` to open the Command Palette of VS Code. Then type <b>Add a Todo from selected text</b> in the input box to add a todo.</li>
+  <li>Click on a todo to update the status of the todo.</li>
+</ul>
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
-
-## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+vscode: ^1.55.1
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+At this time, there are no known issues. If you discover a bug or would like to see a feature added, please create a pull request.
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
 ### 1.1.0
 
-Added features X, Y, and Z.
+Initial release of Todos-VSCode-Extension
 
------------------------------------------------------------------------------------------------------------
-## Following extension guidelines
+## License
 
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
+[MIT License Link](https://github.com/sherwyn11/Todos-VSCode-Extension/blob/master/LICENSE)
 
-## Working with Markdown
 
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+&copy; 2021 Sherwyn D'souza
