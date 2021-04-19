@@ -20,7 +20,7 @@ vscode: ^1.55.1
 
 ## Known Issues
 
-At this time, there are no known issues. If you discover a bug or would like to see a feature added, please create a pull request.
+There may be a case that the extension does not load on first time usage. If this problem occurs, go to the Command Palette of VS Code using `⌘ + ⇧ + P` and select the option `Todos-VSCode: Refresh`.
 
 ## Release Notes
 
