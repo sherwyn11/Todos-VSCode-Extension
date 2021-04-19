@@ -4,7 +4,7 @@ Manage your Todos easily right in VSCode itself!
 
 ## Features
 
-![demo](assets/demo.gif)
+![demo](https://i.ibb.co/k1CFh8f/demo.gif)
 
 <ul>
   <li>GitHub OAuth</li>

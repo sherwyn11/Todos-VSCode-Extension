@@ -3,6 +3,11 @@
   "displayName": "Todos-VSCode-Extension",
   "description": "Manage your Todos easily right in VSCode itself!",
   "version": "0.0.1",
+  "publisher": "sherwyn11",
+  "icon": "media/icon.jpeg",
+  "repository": {
+		"url": "https://github.com/sherwyn11/Todos-VSCode-Extension"
+	},
   "engines": {
     "vscode": "^1.55.0"
   },
