@@ -1,10 +1,19 @@
-# Todos-VScode-Extension <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/1024px-Visual_Studio_Code_1.35_icon.svg.png" height="35px" width="35px"/> <img src="https://freepngimg.com/download/android/62306-do-task-to-icons-list-item-computer.png" height="35px" width="35px"/>
+<h1 align="center"> Todos-VScode-Extension <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/1024px-Visual_Studio_Code_1.35_icon.svg.png" height="35px" width="35px"/> <img src="https://freepngimg.com/download/android/62306-do-task-to-icons-list-item-computer.png" height="35px" width="35px"/> </h1>
 
-Manage your Todos easily right in VSCode itself!
+<p align="center">
+  Manage your Todos easily right in VSCode itself!
+    <br />
+  <br />
+  <img src="https://vsmarketplacebadge.apphb.com/version/sherwyn11.todos-vscode-extension.svg?color=blue&style=flat-square"/>
+  <img src="https://vsmarketplacebadge.apphb.com/rating/sherwyn11.todos-vscode-extension.svg?color=blue&style=flat-square"/>
+  <img src="https://vsmarketplacebadge.apphb.com/installs/sherwyn11.todos-vscode-extension.svg?color=blue&style=flat-square"/>
+<br /><br />
+<img src="https://i.ibb.co/k1CFh8f/demo.gif"/>
+</p>
+
 
 ## Features
 
-![demo](https://i.ibb.co/k1CFh8f/demo.gif)
 
 <ul>
   <li>GitHub OAuth</li>
