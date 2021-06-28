@@ -5,6 +5,7 @@
     <br />
   <br />
   <img src="https://vsmarketplacebadge.apphb.com/version/sherwyn11.todos-vscode-extension.svg?color=blue&style=flat-square"/>
+  <img src="https://vsmarketplacebadge.apphb.com/rating/sherwyn11.todos-vscode-extension.svg?color=blue&style=flat-square"/>
   <img src="https://vsmarketplacebadge.apphb.com/installs/sherwyn11.todos-vscode-extension.svg?color=blue&style=flat-square"/>
 <br /><br />
 <img src="https://i.ibb.co/k1CFh8f/demo.gif"/>
