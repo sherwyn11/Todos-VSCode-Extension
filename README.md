@@ -20,7 +20,7 @@
   <li>(Option 1) Click on <b>Add Todo</b> to add a Todo.</li>
   <li>(Option 2) Select over required text and click on <b>Add a Todo</b> on the VS Code window status bar to add a Todo.</li>
   <li>(Option 3) Select over required text and type `⌘ + ⇧ + P` to open the Command Palette of VS Code. Then type <b>Add a Todo from selected text</b> in the input box to add a todo.</li>
-  <li>Click on a todo to update the status of the Todo.</li>
+  <li>Click on a Todo to update its status.</li>
 </ul>
 
 ## Requirements
