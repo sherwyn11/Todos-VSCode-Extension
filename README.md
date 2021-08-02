@@ -29,7 +29,7 @@ vscode: ^1.55.1
 
 ## Known Issues
 
-There may be a case that the extension does not load on first time usage. If this problem occurs, go to the Command Palette of VS Code using `⌘ + ⇧ + P` and select the option `Todos-VSCode: Refresh`.
+There may be a case that the extension does not load on first time usage. If this problem occurs, please go to the Command Palette of VS Code using `⌘ + ⇧ + P` and select the option `Todos-VSCode: Refresh`.
 
 ## Release Notes
 
